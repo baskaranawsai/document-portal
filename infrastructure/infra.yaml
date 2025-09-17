@@ -37,7 +37,7 @@ Resources:
       ExecutionRoleArn: !GetAtt ECSExecutionRole.Arn
       ContainerDefinitions:
         - Name: document-portal-container
-          Image: <TO_BE_UPDATED_BY_PIPELINE>
+          Image: 149591431454.dkr.ecr.eu-central-1.amazonaws.com/documentportalrepo
           PortMappings:
             - ContainerPort: 80
 
