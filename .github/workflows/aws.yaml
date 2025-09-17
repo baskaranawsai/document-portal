@@ -123,6 +123,7 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+          create-service: true
 
       - name: Done!
         run: echo "Deployed to ECS Fargate Successfully"
