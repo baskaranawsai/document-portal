@@ -8,7 +8,7 @@
   "containerDefinitions": [
     {
       "name": "document-portal-container",
-      "image": "PLACEHOLDER_IMAGE_URI",
+      "image": "149591431454.dkr.ecr.eu-central-1.amazonaws.com/documentportalrepo",
       "cpu": 1024,
       "essential": true,
       "portMappings": [

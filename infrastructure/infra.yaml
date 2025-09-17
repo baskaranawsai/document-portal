@@ -26,21 +26,6 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
 
-  DocumentPortalTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      Family: document-portal-task
-      Cpu: "256"
-      Memory: "512"
-      NetworkMode: awsvpc
-      RequiresCompatibilities: [FARGATE]
-      ExecutionRoleArn: !GetAtt ECSExecutionRole.Arn
-      ContainerDefinitions:
-        - Name: document-portal-container
-          Image: 149591431454.dkr.ecr.eu-central-1.amazonaws.com/documentportalrepo
-          PortMappings:
-            - ContainerPort: 80
-
   DocumentPortalService:
     Type: AWS::ECS::Service
     DependsOn: DocumentPortalCluster
