@@ -48,7 +48,7 @@ jobs:
           aws cloudformation deploy \
             --template-file infrastructure/infra.yaml \
             --stack-name document-portal-stack \
-            --capabilities CAPABILITY_IAM \
+            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
             --region ${{ env.AWS_REGION }}
 
   # -------------------------------
