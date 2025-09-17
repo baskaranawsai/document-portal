@@ -23,6 +23,7 @@ faiss_index/
 # Data & archive
 data/
 archive/
+notebook/
 main_archive/
 *.pdf
 
