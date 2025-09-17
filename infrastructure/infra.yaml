@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ECS Fargate Infrastructure for Document Portal
+
+Resources:
+  DocumentPortalCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: document-portal-cluster
+
+  DocumentPortalRepo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: documentportalrepo
+
+  ECSExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: document-portal-execution-role
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  DocumentPortalTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: document-portal-task
+      Cpu: "256"
+      Memory: "512"
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !GetAtt ECSExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: document-portal-container
+          Image: <TO_BE_UPDATED_BY_PIPELINE>
+          PortMappings:
+            - ContainerPort: 80
+
+  DocumentPortalService:
+    Type: AWS::ECS::Service
+    DependsOn: DocumentPortalCluster
+    Properties:
+      ServiceName: document-portal-service
+      Cluster: !Ref DocumentPortalCluster
+      TaskDefinition: !Ref DocumentPortalTaskDefinition
+      DesiredCount: 1
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - subnet-0cf12bc9d576fe888   # <-- Replace with your subnet IDs
+          SecurityGroups:
+            - sg-0c04045c8435c6e86        # <-- Replace with your SG ID
