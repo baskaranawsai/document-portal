@@ -25,20 +25,3 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
-
-  DocumentPortalService:
-    Type: AWS::ECS::Service
-    DependsOn: DocumentPortalCluster
-    Properties:
-      ServiceName: document-portal-service
-      Cluster: !Ref DocumentPortalCluster
-      TaskDefinition: !Ref DocumentPortalTaskDefinition
-      DesiredCount: 1
-      LaunchType: FARGATE
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          Subnets:
-            - subnet-0cf12bc9d576fe888   # <-- Replace with your subnet IDs
-          SecurityGroups:
-            - sg-0c04045c8435c6e86        # <-- Replace with your SG ID
